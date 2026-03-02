@@ -102,19 +102,34 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>👋 Lukas Kornher</h1>
+            <h1> Lukas Kornher</h1>
             <p>Research | Data Visualization | Interactive Tools</p>
         </div>
         
         <!-- TAB BUTTONS -->
         <div class="tabs">
-            <button class="tab-button" onclick="switchTab('about')">👤 About</button>
+            <button class="tab-button" onclick="switchTab('about')"> About</button>
                   <button class="tab-button active" onclick="switchTab('bessel')">📊 Bessel Functions</button>
             <button class="tab-button" onclick="switchTab('projects')">📁 Projects</button>
             <button class="tab-button" onclick="switchTab('contact')">✉️ Contact</button>
         </div>
+                <!-- TAB 1: ABOUT -->
+        <div id="about" class="tab-content">
+            <h2>About Me</h2>
+            <div class="about-text">
+                <p>Welcome to my portfolio! I'm passionate about data visualization, research, and creating interactive tools.</p>
+                <p>This website showcases some of my work with mathematical functions and data analysis.</p>
+                <h3>Skills:</h3>
+                <ul>
+                    <li>Python & Jupyter Notebooks</li>
+                    <li>JavaScript & Web Development</li>
+                    <li>Data Visualization (Plotly, Matplotlib)</li>
+                    <li>Mathematical Computing</li>
+                </ul>
+            </div>
+        </div>
         
-        <!-- TAB 1: BESSEL FUNCTIONS -->
+        <!-- TAB 2: BESSEL FUNCTIONS -->
         <div id="bessel" class="tab-content active">
             <h2>Bessel Function Explorer</h2>
             
@@ -141,22 +156,6 @@
             
             <div class="info">
                 An interactive visualization of Bessel J functions. Adjust the frequency slider to see how the functions change.
-            </div>
-        </div>
-        
-        <!-- TAB 2: ABOUT -->
-        <div id="about" class="tab-content">
-            <h2>About Me</h2>
-            <div class="about-text">
-                <p>Welcome to my portfolio! I'm passionate about data visualization, research, and creating interactive tools.</p>
-                <p>This website showcases some of my work with mathematical functions and data analysis.</p>
-                <h3>Skills:</h3>
-                <ul>
-                    <li>Python & Jupyter Notebooks</li>
-                    <li>JavaScript & Web Development</li>
-                    <li>Data Visualization (Plotly, Matplotlib)</li>
-                    <li>Mathematical Computing</li>
-                </ul>
             </div>
         </div>
         
