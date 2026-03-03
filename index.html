@@ -114,7 +114,7 @@
             <button class="tab-button active" onclick="switchTab('about')">👤 About</button>
             <button class="tab-button" onclick="switchTab('projects')">📁 Projects</button>
             <button class="tab-button" onclick="switchTab('research')">🔬 Research</button>
-            <button class="tab-button" onclick="switchTab('media')">📚 Media Coverage</button>
+            <button class="tab-button" onclick="switchTab('publications')">📚 Publications</button>
             <button class="tab-button" onclick="switchTab('contact')">✉️ Contact</button>
         </div>
 
@@ -144,31 +144,7 @@
             <div class="project-section">
                 <h3>1. Bessel Function Explorer</h3>
                 <p style="color:#555; margin-bottom:15px;">Interactive visualization of Bessel J functions with adjustable frequency and order parameters.</p>
-                
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px;">
-                    <div class="control-group">
-                        <label for="besselSelect">Select Bessel Orders (hold Ctrl/Cmd):</label>
-                        <select id="besselSelect" multiple size="6">
-                            <option value="0" selected>Order 0</option>
-                            <option value="1" selected>Order 1</option>
-                            <option value="2">Order 2</option>
-                            <option value="3">Order 3</option>
-                            <option value="4">Order 4</option>
-                            <option value="5">Order 5</option>
-                        </select>
-                    </div>
-                    
-                    <div class="control-group">
-                        <label for="freqSlider">Frequency: <span id="freqValue">1.0</span></label>
-                        <input type="range" id="freqSlider" min="1" max="20" value="1" step="0.1">
-                    </div>
-                </div>
-                
-                <div id="plotDiv"></div>
-                
-                <div class="info">
-                    An interactive visualization of Bessel J functions. Adjust the frequency slider to see how the functions change.
-                </div>
+                <a href="chart.html" target="_blank" style="display:inline-block; margin-top:8px; padding:10px 20px; background:#667eea; color:white; border-radius:4px; text-decoration:none; font-weight:bold;">📊 Open Explorer</a>
             </div>
 
             <!-- PROJECT 2: AFRICA TRADE MAP -->
@@ -188,9 +164,9 @@
             </div>
         </div>
 
-        <!-- TAB 4: MEDIA COVERAGE -->
-        <div id="media" class="tab-content">
-            <h2>media</h2>
+        <!-- TAB 4: PUBLICATIONS -->
+        <div id="publications" class="tab-content">
+            <h2>Publications</h2>
             <div class="about-text">
                 <p>Coming soon.</p>
             </div>
@@ -200,80 +176,10 @@
         <div id="contact" class="tab-content">
             <h2>Get In Touch</h2>
             <div class="about-text">
-                <p><strong>Email:</strong> <a href="mailto:lukas.kornher@idos-research.de">lukas.kornher@idos-research.de</a></p>
+                <p><strong>Email:</strong> <a href="/cdn-cgi/l/email-protection#f8948d93998bd693978a96909d8ab8919c978bd58a9d8b9d998a9b90d69c9d"><span class="__cf_email__" data-cfemail="2c4059474d5f0247435e4244495e6c4548435f015e495f494d5e4f44024849">[email&#160;protected]</span></a></p>
                 <p><strong>GitHub:</strong> <a href="https://github.com/lukaskornher-koku">github.com/lukaskornher-koku</a></p>
                 <p><strong>LinkedIn:</strong> <a href="https://linkedin.com/in/lukas-kornher-11b90b66/">LinkedIn/lukaskornher</a></p>
             </div>
         </div>
     </div>
-    
-    <script>
-        // TAB SWITCHING FUNCTION
-        function switchTab(tabName) {
-            const tabs = document.querySelectorAll('.tab-content');
-            tabs.forEach(tab => tab.classList.remove('active'));
-            
-            const buttons = document.querySelectorAll('.tab-button');
-            buttons.forEach(btn => btn.classList.remove('active'));
-            
-            document.getElementById(tabName).classList.add('active');
-            event.target.classList.add('active');
-            
-            if (tabName === 'projects') {
-                setTimeout(updatePlot, 100);
-            }
-        }
-        
-        // BESSEL FUNCTION CODE
-        function besselJ(order, x) {
-            if (x === 0) return order === 0 ? 1 : 0;
-            let sum = 0, term = Math.pow(x / 2, order), factorial = 1;
-            for (let k = 1; k <= order; k++) factorial *= k;
-            sum = term / factorial;
-            for (let k = 1; k < 50; k++) {
-                term *= -(x * x) / (4 * k * (order + k));
-                sum += term;
-                if (Math.abs(term) < 1e-10) break;
-            }
-            return sum;
-        }
-        
-        const x = Array.from({length: 1000}, (_, i) => (i / 999) * Math.PI);
-        const colors = ['#FF6B6B', '#4ECDC4', '#45B7D1', '#FFA07A', '#98D8C8', '#F7B731'];
-        
-        function updatePlot() {
-            const select = document.getElementById('besselSelect');
-            const orders = Array.from(select.selectedOptions).map(o => parseInt(o.value)).sort((a,b) => a-b);
-            const freq = parseFloat(document.getElementById('freqSlider').value);
-            
-            if (!orders.length) return;
-            
-            const traces = orders.map((order, idx) => ({
-                x: x,
-                y: x.map(xi => besselJ(order, freq * xi)),
-                mode: 'lines',
-                name: `J_${order}`,
-                line: { color: colors[idx % colors.length], width: 2.5, shape: 'spline' }
-            }));
-            
-            const layout = {
-                title: `Bessel Functions (Frequency = ${freq.toFixed(1)})`,
-                xaxis: { title: 'Nanoseconds (0 to π)' },
-                yaxis: { title: 'Volts' },
-                hovermode: 'x unified',
-                plot_bgcolor: '#fafafa'
-            };
-            
-            Plotly.newPlot('plotDiv', traces, layout, { responsive: true });
-        }
-        
-        document.getElementById('besselSelect').addEventListener('change', updatePlot);
-        document.getElementById('freqSlider').addEventListener('input', (e) => {
-            document.getElementById('freqValue').textContent = parseFloat(e.target.value).toFixed(1);
-            updatePlot();
-        });
-        
-        window.addEventListener('load', updatePlot);
-    </script>
-</body>
-</html>
+  
